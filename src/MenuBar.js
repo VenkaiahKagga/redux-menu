@@ -1,21 +1,32 @@
 import React, { PropTypes } from 'react';
-import onClickOutside from 'react-onclickoutside'
+import ReactDOM from 'react-dom';
 
 const menuBarStyle = {
   height: '25px',
-  userSelect: 'none',
-  marginTop: '5px',
-  marginLeft: '10px'
+  userSelect: 'none'
 }
 
 class MenuBar extends React.Component {
   constructor(props) {
     super(props);
 
+    this._handleClickOutside = this._handleClickOutside.bind(this);
+    this._dropDown = this._dropDown.bind(this);
+    this._clickOnMenuItem = this._clickOnMenuItem.bind(this);
+    this._closeMenu = this._closeMenu.bind(this);
+
     this.state = {
       droppedDownIndex: -1,
       clicked: false
     }
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this._handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this._handleClickOutside);
   }
 
   _dropDown(index) {
@@ -38,22 +49,25 @@ class MenuBar extends React.Component {
     });
   }
 
-  handleClickOutside(_e) {
-    this._closeMenu();
+  _handleClickOutside(e) {
+    const domNode = ReactDOM.findDOMNode(this);
+    if (!domNode.contains(e.target)) {
+      this._closeMenu();
+    }
   }
 
   render() {
     return (
       <div style={menuBarStyle}>
         {
-          this.props.children.map((Component,index) => {
+          React.Children.map(this.props.children, (Component,index) => {
             return React.cloneElement(
               Component,
               {
                 droppedDown: this.state.clicked && index === this.state.droppedDownIndex,
-                dropDown: this._dropDown(index).bind(this),
-                handleClick: this._clickOnMenuItem.bind(this),
-                closeMenu: this._closeMenu.bind(this),
+                dropDown: this._dropDown(index),
+                handleClick: this._clickOnMenuItem,
+                closeMenu: this._closeMenu,
                 key: `menuItem-${index}`
               }
             )
@@ -68,5 +82,5 @@ class MenuBar extends React.Component {
   }
 }
 
-export default onClickOutside(MenuBar);
+export default MenuBar;
 

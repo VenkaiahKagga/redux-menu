@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import MenuDropdown from './MenuDropdown';
 
 const menuItemStyle = {
+  boxSizing: 'border-box',
   width: '100%',
   cursor: 'pointer',
   paddingLeft: '5px',
@@ -27,6 +28,18 @@ const shortKeyStyle = {
   color: '#BBBBBB',
   marginRight: '5px',
   fontSize: '10pt'
+}
+
+const caretStyle = {
+  width: 0,
+  height: 0,
+  borderTop: '5px solid transparent',
+  borderBottom: '5px solid transparent',
+  borderLeft: '5px solid gray',
+  float: 'right',
+  marginRight: '5px',
+  marginTop: '5px',
+  boxShadow: 'inset 0 0 5px black'
 }
 
 class MenuItem extends React.Component {
@@ -85,7 +98,7 @@ class MenuItem extends React.Component {
           onClick={
             this.props.disabled ? x => x :
               this.props.onClick ? (e) => {
-                this.props.onClick(e);
+                this.props.onClick(this.props.dispatch, e);
                 this.props.closeMenu();
               } : (_e) => {
                 this.props.closeMenu();
@@ -94,12 +107,12 @@ class MenuItem extends React.Component {
         >
           <div style={iconStyle}>
             {this.props.icon &&
-              <i class={`fa fa-${this.props.icon}`}></i>
+              <i className={this.props.icon}></i>
             }
           </div>
           {this.props.name}
           {!isEmpty(this.props.children) &&
-            <i class='fa fa-caret-right' style={dropdownIconStyle}></i>
+            <i style={caretStyle}></i>
           }
           {this.props.shortKey && !this.props.disabled &&
             <div style={shortKeyStyle}>
@@ -135,5 +148,6 @@ export default connect(
     if (typeof ownProps.name === 'function')
       extend = {...extend, name: ownProps.name(state)}
     return extend;
-  }
+  },
+  dispatch => ({ dispatch })
 )(MenuItem);

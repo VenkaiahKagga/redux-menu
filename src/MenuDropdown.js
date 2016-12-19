@@ -56,7 +56,7 @@ class MenuDropdown extends React.Component {
     return (
       <div style={this._adaptOffset(menuDropdownStyle)}>
         {
-          this.props.children.map((Component,index) => {
+          React.Children.map(this.props.children, (Component,index) => {
             return React.cloneElement(
               Component,
               {
