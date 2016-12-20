@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import MenuDropdown from './MenuDropdown';
 
+// TODO: get styles out, generalize and make customizable
 const menuItemStyle = {
   boxSizing: 'border-box',
   width: '100%',
@@ -42,6 +43,7 @@ const caretStyle = {
   boxShadow: 'inset 0 0 5px black'
 }
 
+// TODO: generalize this, merge partly with MenuHeader
 class MenuItem extends React.Component {
   constructor(props) {
     super(props);

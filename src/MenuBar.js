@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
+// TODO: get styles out, generalize and make customizable
 const menuBarStyle = {
   height: '25px',
   userSelect: 'none'

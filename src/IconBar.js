@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 
+// TODO: get styles out, generalize and make customizable
 const iconBarStyle = {
   height: '35px',
   userSelect: 'none',

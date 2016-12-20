@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Tooltipify from './Tooltipify';
 
+// TODO: get styles out, generalize and make customizable
 const iconStyle = {
   margin: '5px',
   fontSize: '14pt',

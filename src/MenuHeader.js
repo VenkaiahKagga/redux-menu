@@ -2,11 +2,13 @@ import React, { PropTypes } from 'react';
 
 import MenuDropdown from './MenuDropdown';
 
+// TODO: get styles out, generalize and make customizable
 const menuHeaderStyle = {
   padding: '5px 10px',
   cursor: 'default',
 }
 
+// TODO: generalize this, merge partly with MenuItem
 class MenuHeader extends React.Component {
   constructor(props) {
     super(props);

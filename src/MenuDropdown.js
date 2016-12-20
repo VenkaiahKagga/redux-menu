@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 
 const BORDER_WIDTH = 1
 
+// TODO: get styles out, generalize and make customizable
 const menuDropdownStyle = {
   position:'fixed',
   backgroundColor:'#FEFEFE',
