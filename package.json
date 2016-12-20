@@ -4,7 +4,7 @@
   "description": "A package to help you create a React menu which is connected with Redux state and actions.",
   "main": "lib/index.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --config webpack.config.production.js",
+    "build": "./node_modules/.bin/webpack --config -p webpack.config.production.js",
     "dev": "./node_modules/.bin/webpack --config webpack.config.development.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
