@@ -1,15 +1,22 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import Tooltipify from './Tooltipify';
 
-// TODO: get styles out, generalize and make customizable
-const iconStyle = {
-  margin: '5px',
-  fontSize: '14pt',
-  color: '#555555',
-  padding: '5px'
-}
+const StyledIconItem = styled.i`
+  margin: 5px;
+  font-size: 14pt;
+  padding: 5px;
+  color: ${props => props.disabled ? '#BBBBBB' : '#555555'};
+  cursor: ${props => props.disabled ? 'default' : 'pointer'};
+  box-shadow: ${props => props.clicking ? 'inset 0 0 2px black' : 'none'};
+  &:hover {
+    box-shadow: ${props => props.disabled ? 'none' :
+                           props.clicking ? 'inset 0 0 2px black' :
+                                            '0 0 3px black'};
+  }
+`
 
 class IconItem extends React.Component {
   constructor(props) {
@@ -43,48 +50,31 @@ class IconItem extends React.Component {
     });
   }
 
-  _adaptHover(style) {
-    if (!this.state.clicking || this.props.disabled) {
-      return style;
-    } else {
-      return {
-        ...style,
-        boxShadow: 'inset 0 0 3px black'
-      };
-    }
-  }
-
-  _adaptDisabled(style) {
-    if (!this.props.disabled) {
-      return style;
-    } else {
-      return {
-        ...style,
-        color: '#BBBBBB',
-        cursor: 'default'
-      }
-    }
-  }
-
   render() {
-    const TooltipifiedIcon = Tooltipify(props => <i {...props} />);
+    const { name, disabled, icon, shortKey } = this.props;
+    const { clicking } = this.state;
+    const TooltipifiedIcon = Tooltipify(props => <StyledIconItem {...props} />);
     let tooltip;
-    if (!this.props.disabled)
-      tooltip = `${this.props.name} ${this.props.shortKey ? `(${this.props.shortKey})` : ''}`;
+    if (!disabled)
+      tooltip = `${name} ${shortKey ? `(${shortKey})` : ''}`;
     return (
       <TooltipifiedIcon
-        tooltip={tooltip}
-        class={`fa fa-${this.props.icon} ${!this.props.disabled && 'hover-icon'}`}
-        style={this._adaptDisabled(this._adaptHover(iconStyle))}
-        onMouseDown={this._handleMouseDown.bind(this)}
-        onMouseUp={this._handleMouseUp.bind(this)}
-        onMouseLeave={this._handleMouseLeave.bind(this)}
+        tooltip={ tooltip }
+        className={ icon }
+        onMouseDown={ this._handleMouseDown.bind(this) }
+        onMouseUp={ this._handleMouseUp.bind(this) }
+        onMouseLeave={ this._handleMouseLeave.bind(this) }
+        disabled={ disabled }
+        clicking={ clicking }
       />
     );
   }
 
   static propTypes = {
-
+    name: PropTypes.string.isRequired,
+    disabled: PropTypes.bool,
+    icon: PropTypes.string,
+    shortKey: PropTypes.string,
   }
 }
 

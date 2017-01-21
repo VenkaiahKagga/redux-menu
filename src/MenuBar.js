@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import styled from 'styled-components';
 
-// TODO: get styles out, generalize and make customizable
-const menuBarStyle = {
-  height: '25px',
-  userSelect: 'none'
-}
+const StyledMenuBar = styled.div`
+  height: 25px;
+  user-select: none;
+`;
 
 class MenuBar extends React.Component {
   constructor(props) {
@@ -59,7 +59,7 @@ class MenuBar extends React.Component {
 
   render() {
     return (
-      <div style={menuBarStyle}>
+      <StyledMenuBar>
         {
           React.Children.map(this.props.children, (Component,index) => {
             return React.cloneElement(
@@ -74,7 +74,7 @@ class MenuBar extends React.Component {
             )
           })
         }
-      </div>
+      </StyledMenuBar>
     );
   }
 
